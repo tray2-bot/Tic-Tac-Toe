@@ -24,7 +24,6 @@ const winningConditions = [
   [2,4,6]
 ];
 
-// Handle human click
 function handleCellClick(event) {
   const index = event.target.dataset.index;
   if (board[index] !== '' || !gameActive) return;
@@ -37,7 +36,6 @@ function handleCellClick(event) {
   }
 }
 
-// Make a move and animate
 function makeMove(index, player) {
   board[index] = player;
   const cell = cells[index];
@@ -64,7 +62,6 @@ function makeMove(index, player) {
   }
 }
 
-// Check winner and highlight winning line
 function checkWinner(player, highlight = false) {
   let won = false;
   for (let condition of winningConditions) {
@@ -90,14 +87,12 @@ function checkWinner(player, highlight = false) {
   return won;
 }
 
-// Update scoreboard
 function updateScore() {
   humanScoreDisplay.textContent = `X: ${humanScore}`;
   aiScoreDisplay.textContent = `O: ${aiScore}`;
   drawScoreDisplay.textContent = `Draws: ${drawScore}`;
 }
 
-// Minimax algorithm for unbeatable AI
 function minimax(newBoard, player) {
   const availSpots = newBoard.map((v,i) => v === '' ? i : null).filter(v => v !== null);
 
@@ -146,12 +141,10 @@ function minimax(newBoard, player) {
   return bestMove;
 }
 
-// Get best move for AI
 function getBestMove() {
   return minimax(board, aiPlayer).index;
 }
 
-// Helper for minimax
 function checkWin(boardState, player) {
   return winningConditions.some(condition => {
     const [a, b, c] = condition;
@@ -159,7 +152,6 @@ function checkWin(boardState, player) {
   });
 }
 
-// Reset game board but keep scores
 function resetGame() {
   board = ['', '', '', '', '', '', '', '', ''];
   cells.forEach(cell => {
@@ -169,6 +161,5 @@ function resetGame() {
 gameActive = true;
 }
 
-// Event listeners
 cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 document.getElementById('resetBtn').addEventListener('click', resetGame);
